@@ -1,0 +1,46 @@
+{
+  "name": "vscode-github-issue",
+  "displayName": "VSCode GitHub Issue",
+  "description": "Create a GitHub issue with a permalink to the selected line",
+
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "activationEvents": [
+    "onCommand:extension.createGithubIssue"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.createGithubIssue",
+        "title": "Create GitHub Issue"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.createGithubIssue",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.95.0",
+    "@types/node": "20.12.0",
+    "typescript": "^5.6.3",
+    "eslint": "^9.14.0",
+    "@typescript-eslint/parser": "^8.12.2",
+    "@typescript-eslint/eslint-plugin": "^8.12.2"
+  }
+}
