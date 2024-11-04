@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import simpleGit from 'simple-git';
 import { parse } from 'path';
+import * as os from 'os';
 //import fetch from 'node-fetch';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -28,7 +29,13 @@ async function getRepoUrl(filePath: string): Promise<string> {
 
     try {
         const path = parse(filePath);
-        const git = simpleGit(path.dir.substring(1)); // Remove leading slash
+        let baseDir = path.dir;
+        
+        if (os.platform() === 'win32') {
+            baseDir = baseDir.substring(1); // Remove leading slash for Windows paths
+        }
+
+        const git = simpleGit(baseDir);
         const remotes = await git.getRemotes(true);
         const originRemote = remotes.find(remote => remote.name === 'origin');
         const repoUrl = originRemote ? originRemote.refs.fetch : 'https://github.com/your-username/your-repo'; // Fallback URL
